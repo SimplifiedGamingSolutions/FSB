@@ -4,6 +4,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderFlat;
 
 public class CleanRoomWorldType extends WorldType {
     public CleanRoomWorldType(String name) {
@@ -19,7 +20,7 @@ public class CleanRoomWorldType extends WorldType {
     @Override
     public IChunkProvider getChunkGenerator(World world, String generatorOptions) {
         // This is our ChunkProvider, this generates the world terrain.
-        return new CleanRoomChunkProvider(world, world.getSeed(), true);
+        return new CleanRoomChunkProvider(world, world.getSeed(), true);//new ChunkProviderFlat(world, world.getSeed(), true, "CleanRoom");
     }
 
     public boolean hasVoidParticles(boolean flag) {

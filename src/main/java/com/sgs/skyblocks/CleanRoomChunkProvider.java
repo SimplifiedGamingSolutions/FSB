@@ -46,7 +46,7 @@ public class CleanRoomChunkProvider implements IChunkProvider {
 	     */
 	    public boolean chunkExists(int par1, int par2)
 	    {
-	        return true;
+	        return false;
 	    }
 
 	    /**

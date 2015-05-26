@@ -6,14 +6,13 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = SkyBlocks.MODID, version = SkyBlocks.VERSION)
 public class SkyBlocks
 {
     public static final String MODID = "SkyBlocks";
     public static final String VERSION = "1.0";
-    public static WorldType cleanRoom = new CleanRoomWorldType("void");
+    public static WorldType CleanRoom = new CleanRoomWorldType("CleanRoom");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -22,7 +21,7 @@ public class SkyBlocks
     
     @EventHandler
     public void Load(FMLInitializationEvent event){
-    	LanguageRegistry.instance().addStringLocalization("generator.void", "void");
+    	
     }
     
     @EventHandler
