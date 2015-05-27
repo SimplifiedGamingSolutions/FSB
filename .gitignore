@@ -7,3 +7,48 @@
 .project
 .settings/org.eclipse.jdt.core.prefs
 /bin/
+.classpath
+config/forge.cfg
+config/forgeChunkLoading.cfg
+logs/2015-05-22-1.log.gz
+logs/2015-05-22-2.log.gz
+options.txt
+saves/New World--/DIM-1/data/villages_nether.dat
+saves/New World--/DIM-1/forcedchunks.dat
+saves/New World--/DIM1/data/villages_end.dat
+saves/New World--/DIM1/forcedchunks.dat
+saves/New World--/data/Mineshaft.dat
+saves/New World--/data/villages.dat
+saves/New World--/forcedchunks.dat
+saves/New World--/level.dat
+saves/New World--/level.dat_mcr
+saves/New World--/level.dat_old
+saves/New World--/playerdata/5b6052a7-6bab-33d6-92c2-a3d77755ef06.dat
+saves/New World--/region/r.-1.-1.mca
+saves/New World--/region/r.-1.0.mca
+saves/New World--/region/r.0.-1.mca
+saves/New World--/region/r.0.0.mca
+saves/New World--/session.lock
+saves/New World--/stats/5b6052a7-6bab-33d6-92c2-a3d77755ef06.json
+saves/New World-/DIM-1/data/villages_nether.dat
+saves/New World-/DIM-1/forcedchunks.dat
+saves/New World-/DIM1/data/villages_end.dat
+saves/New World-/DIM1/forcedchunks.dat
+saves/New World-/data/Mineshaft.dat
+saves/New World-/data/Village.dat
+saves/New World-/data/villages.dat
+saves/New World-/forcedchunks.dat
+saves/New World-/level.dat
+saves/New World-/level.dat_mcr
+saves/New World-/level.dat_old
+saves/New World-/playerdata/d3aa0338-14e5-3fd8-aca9-5e19667fa0b6.dat
+saves/New World-/region/r.-1.0.mca
+saves/New World-/region/r.0.0.mca
+saves/New World-/session.lock
+saves/New World-/stats/d3aa0338-14e5-3fd8-aca9-5e19667fa0b6.json
+saves/New World/level.dat
+saves/New World/level.dat_mcr
+saves/New World/region/r.-1.0.mca
+saves/New World/region/r.0.0.mca
+saves/New World/session.lock
+usernamecache.json
