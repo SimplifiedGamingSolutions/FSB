@@ -13,7 +13,7 @@ import com.sgs.skyblocks.utils.SkyBlocksLogger;
 
 public class IslandGenerator {
 	private SkyBlocksLogger logger = SkyBlocks.getLogger();
-	private int island_height = 100;
+	private int island_height = 50;
 	public IslandGenerator() {
         logger.entering("createIsland", this.getClass().getName());
         logger.log(Level.INFO, "Finished creating player island.");
