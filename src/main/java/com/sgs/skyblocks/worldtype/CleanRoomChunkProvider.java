@@ -1,4 +1,4 @@
-package com.sgs.skyblocks;
+package com.sgs.skyblocks.worldtype;
 
 import java.util.ArrayList;
 import java.util.List;
