@@ -1,15 +1,17 @@
-package com.sgs.skyblocks;
+package com.sgs.skyblocks.command;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sgs.skyblocks.island.IslandGenerator;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+
+import com.sgs.skyblocks.SkyBlocks;
+import com.sgs.skyblocks.island.IslandGenerator;
 
 public class SkyblockCommand implements ICommand{
 
@@ -18,6 +20,8 @@ public class SkyblockCommand implements ICommand{
     public SkyblockCommand() {
 		aliases = new ArrayList<String>();
 		aliases.add("SkyBlock");
+		aliases.add("skyblock");
+		aliases.add("sb");
 	}
 	@Override
 	public int compareTo(Object o) {
@@ -38,14 +42,22 @@ public class SkyblockCommand implements ICommand{
 	}
 
 	@Override
-	public List getAliases() {
+	public List<String> getAliases() {
 		return this.aliases;
 	}
 
 	@Override
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
-		EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
-		IslandGenerator.createIsland(player);
+		if(args.length > 0)
+		{
+			if(args[0].equalsIgnoreCase("join"))
+			{
+				EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
+				BlockPos pos = IslandGenerator.createIsland(player);
+				sender.addChatMessage(new ChatComponentText("Island Created"));
+				player.setPositionAndUpdate(pos.getX(), pos.getY()+1, pos.getZ());
+			}
+		}
 	}
 
 	@Override
@@ -55,7 +67,7 @@ public class SkyblockCommand implements ICommand{
 	}
 
 	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args,
+	public List<?> addTabCompletionOptions(ICommandSender sender, String[] args,
 			BlockPos pos) {
 		// TODO Auto-generated method stub
 		return null;

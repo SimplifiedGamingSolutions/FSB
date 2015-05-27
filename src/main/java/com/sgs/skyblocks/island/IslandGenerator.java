@@ -1,16 +1,15 @@
 package com.sgs.skyblocks.island;
 
-import org.apache.logging.log4j.Level;
-
-import com.sgs.skyblocks.SkyBlocks;
-import com.sgs.skyblocks.utils.SkyBlocksLogger;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+
+import org.apache.logging.log4j.Level;
+
+import com.sgs.skyblocks.SkyBlocks;
+import com.sgs.skyblocks.utils.SkyBlocksLogger;
 
 public class IslandGenerator {
 	private SkyBlocksLogger logger = SkyBlocks.getLogger();

@@ -1,13 +1,6 @@
 package com.sgs.skyblocks;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
-
-import com.sgs.skyblocks.utils.SkyBlocksLogger;
-import com.sgs.skyblocks.worldtype.CleanRoomWorldType;
-
 import net.minecraft.world.WorldType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,6 +8,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+
+import com.sgs.skyblocks.command.SkyblockCommand;
+import com.sgs.skyblocks.utils.SkyBlocksLogger;
+import com.sgs.skyblocks.worldtype.CleanRoomWorldType;
 
 @Mod(modid="SkyBlocks", name="SkyBlocks", version="1.0"/*, dependencies = "required-after:worldedit"*/)
 public class SkyBlocks

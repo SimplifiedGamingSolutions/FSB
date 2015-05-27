@@ -3,7 +3,6 @@ package com.sgs.skyblocks.island;
 import java.io.Serializable;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 
 public class Island implements Serializable{

@@ -1,35 +1,21 @@
 package com.sgs.skyblocks.worldtype;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-import net.minecraft.world.gen.FlatGeneratorInfo;
-import net.minecraft.world.gen.feature.WorldGenLakes;
 
 public class CleanRoomChunkProvider implements IChunkProvider {
 	 private World worldObj;
-	    private Random random;
-	    private final byte[] cachedBlockIDs = new byte[256];
-	    private final byte[] cachedBlockMetadata = new byte[256];
-	    private final List structureGenerators = new ArrayList();
-	    private WorldGenLakes waterLakeGenerator;
-	    private WorldGenLakes lavaLakeGenerator;
 
 	    public CleanRoomChunkProvider(World par1World, long par2, boolean par4)
 	    {
 	        this.worldObj = par1World;
-	        this.random = new Random(par2);
 	    }
 
 	    /**
@@ -124,7 +110,7 @@ public class CleanRoomChunkProvider implements IChunkProvider {
 		}
 
 		@Override
-		public List func_177458_a(EnumCreatureType p_177458_1_,
+		public List<?> func_177458_a(EnumCreatureType p_177458_1_,
 				BlockPos p_177458_2_) {
 	        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(new BlockPos(p_177458_2_.getX(), p_177458_2_.getY(), p_177458_2_.getZ()));
 	        return biomegenbase == null ? null : biomegenbase.getSpawnableList(p_177458_1_);
