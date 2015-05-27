@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid="SkyBlocks", name="SkyBlocks", version="1.0"/*, dependencies = "required-after:WorldEdit"*/)
+@Mod(modid="SkyBlocks", name="SkyBlocks", version="1.0"/*, dependencies = "required-after:worldedit"*/)
 public class SkyBlocks
 {
     public static WorldType CleanRoom = new CleanRoomWorldType("CleanRoom");
