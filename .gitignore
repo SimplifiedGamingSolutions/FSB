@@ -91,3 +91,97 @@ crash-reports/crash-2015-05-27_09.10.41-client.txt
 crash-reports/crash-2015-05-27_09.13.30-client.txt
 config/worldedit/worldedit.properties
 config/SkyBlocks.cfg
+banned-ips.json
+banned-players.json
+crash-reports/crash-2015-05-24_14.51.32-server.txt
+crash-reports/crash-2015-05-24_15.01.26-server.txt
+crash-reports/crash-2015-05-24_15.03.33-server.txt
+crash-reports/crash-2015-05-24_18.51.39-server.txt
+crash-reports/crash-2015-05-24_23.44.23-server.txt
+crash-reports/crash-2015-05-24_23.48.17-server.txt
+crash-reports/crash-2015-05-24_23.55.51-server.txt
+crash-reports/crash-2015-05-25_00.14.14-server.txt
+crash-reports/crash-2015-05-25_00.16.24-server.txt
+crash-reports/crash-2015-05-26_11.46.12-server.txt
+crash-reports/crash-2015-05-26_11.47.17-server.txt
+crash-reports/crash-2015-05-26_11.49.51-server.txt
+crash-reports/crash-2015-05-26_12.27.44-client.txt
+crash-reports/crash-2015-05-26_12.33.00-server.txt
+crash-reports/crash-2015-05-26_21.56.32-client.txt
+crash-reports/crash-2015-05-26_22.08.19-client.txt
+logs/2015-05-24-1.log.gz
+logs/2015-05-24-2.log.gz
+logs/2015-05-24-3.log.gz
+logs/2015-05-24-4.log.gz
+logs/2015-05-24-5.log.gz
+logs/2015-05-25-1.log.gz
+logs/2015-05-25-2.log.gz
+logs/2015-05-26-1.log.gz
+logs/2015-05-26-2.log.gz
+logs/2015-05-26-3.log.gz
+logs/2015-05-26-4.log.gz
+logs/2015-05-26-5.log.gz
+logs/2015-05-26-6.log.gz
+logs/2015-05-26-7.log.gz
+ops.json
+saves/New World/DIM-1/data/villages_nether.dat
+saves/New World/DIM-1/forcedchunks.dat
+saves/New World/DIM1/data/villages_end.dat
+saves/New World/DIM1/forcedchunks.dat
+saves/New World/data/Mineshaft.dat
+saves/New World/data/Monument.dat
+saves/New World/data/villages.dat
+saves/New World/forcedchunks.dat
+saves/New World/level.dat_old
+saves/New World/playerdata/7ba45a5a-c3de-3909-ba3c-f9f78edf15b6.dat
+saves/New World/playerdata/8647fa2e-0d3d-396f-b7fb-761893f2c64f.dat
+saves/New World/region/r.-1.-1.mca
+saves/New World/region/r.0.-1.mca
+saves/New World/stats/7ba45a5a-c3de-3909-ba3c-f9f78edf15b6.json
+saves/New World/stats/8647fa2e-0d3d-396f-b7fb-761893f2c64f.json
+saves/Test/DIM-1/data/villages_nether.dat
+saves/Test/DIM-1/forcedchunks.dat
+saves/Test/DIM1/data/villages_end.dat
+saves/Test/DIM1/forcedchunks.dat
+saves/Test/data/villages.dat
+saves/Test/forcedchunks.dat
+saves/Test/level.dat
+saves/Test/level.dat_mcr
+saves/Test/level.dat_old
+saves/Test/playerdata/7ba45a5a-c3de-3909-ba3c-f9f78edf15b6.dat
+saves/Test/region/r.-1.0.mca
+saves/Test/region/r.-1.1.mca
+saves/Test/region/r.-1.2.mca
+saves/Test/region/r.0.0.mca
+saves/Test/region/r.0.1.mca
+saves/Test/region/r.0.2.mca
+saves/Test/region/r.1.0.mca
+saves/Test/region/r.1.1.mca
+saves/Test/region/r.1.2.mca
+saves/Test/region/r.2.1.mca
+saves/Test/region/r.3.1.mca
+saves/Test/region/r.3.2.mca
+saves/Test/region/r.4.1.mca
+saves/Test/region/r.4.2.mca
+saves/Test/session.lock
+saves/Test/stats/7ba45a5a-c3de-3909-ba3c-f9f78edf15b6.json
+server.properties
+usercache.json
+whitelist.json
+world/DIM-1/data/villages_nether.dat
+world/DIM-1/forcedchunks.dat
+world/DIM1/data/villages_end.dat
+world/DIM1/forcedchunks.dat
+world/data/Mineshaft.dat
+world/data/Village.dat
+world/data/villages.dat
+world/forcedchunks.dat
+world/level.dat
+world/level.dat_old
+world/playerdata/61643408-d2f7-4d19-85ef-01405438b5c8.dat
+world/region/r.-1.-1.mca
+world/region/r.-1.0.mca
+world/region/r.0.-1.mca
+world/region/r.0.0.mca
+world/session.lock
+world/stats/61643408-d2f7-4d19-85ef-01405438b5c8.json
