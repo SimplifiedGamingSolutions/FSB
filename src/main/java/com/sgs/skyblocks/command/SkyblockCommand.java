@@ -11,7 +11,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 
 import com.sgs.skyblocks.SkyBlocks;
+import com.sgs.skyblocks.island.Island;
 import com.sgs.skyblocks.island.IslandGenerator;
+import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class SkyblockCommand implements ICommand{
 
@@ -50,12 +52,18 @@ public class SkyblockCommand implements ICommand{
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
 		if(args.length > 0)
 		{
+			EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
 			if(args[0].equalsIgnoreCase("join"))
 			{
-				EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
-				BlockPos pos = IslandGenerator.createIsland(player);
-				sender.addChatMessage(new ChatComponentText("Island Created"));
+				BlockPos pos = new Island(player).getLocation();
+				sender.addChatMessage(new ChatComponentText("Island Created at: " + pos.getX()+" "+pos.getY()+" "+pos.getZ()));
 				player.setPositionAndUpdate(pos.getX(), pos.getY()+1, pos.getZ());
+			}
+			else if(args[0].equalsIgnoreCase("load"))
+			{
+				SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
+				BlockPos pos = BlockPos.fromLong(data.getData().getLong("location"));
+				sender.addChatMessage(new ChatComponentText("Island at location: "+ pos.getX()+" "+pos.getY()+" "+pos.getZ()));
 			}
 		}
 	}
