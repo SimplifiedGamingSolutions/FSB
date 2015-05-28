@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.sgs.skyblocks.island.Island;
+import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,8 +32,8 @@ public class PlayerInfo implements Serializable{
 
 	public static PlayerInfo getPlayerInfo(EntityPlayer player)
 	{
-		NBTTagCompound data = player.getEntityData();
-		byte[] rawPlayerInfo = data.getByteArray("playerInfo");
+		NBTTagCompound data = SkyBlocksWorldData.forWorld(player.getEntityWorld()).getData();
+		byte[] rawPlayerInfo = data.getByteArray(player.getName());
 		if(rawPlayerInfo.length != 0){
 			return PlayerInfo.fromBytes(rawPlayerInfo);
 		}
@@ -41,10 +42,10 @@ public class PlayerInfo implements Serializable{
 			return new PlayerInfo(player, new Island(player));
 		}
 	}
-	
+
 	public void savePlayerInfo(EntityPlayer player){
-		NBTTagCompound data = player.getEntityData();
-		data.setByteArray("playerInfo", this.toBytes());
+		NBTTagCompound data = SkyBlocksWorldData.forWorld(player.getEntityWorld()).getData();
+		data.setByteArray(player.getName(), this.toBytes());
 	}
 	
 	public Island getIsland()

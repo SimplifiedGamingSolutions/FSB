@@ -1,6 +1,7 @@
 package com.sgs.skyblocks.island;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -198,6 +199,6 @@ public class IslandGenerator {
         blockToChange = new BlockPos(x, y + 1, z);
         world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
         blockToChange = new BlockPos(x, island_height + 5, z + 1);
-        world.setBlockState(blockToChange, Block.getBlockById(54).getDefaultState());
+        world.setBlockState(blockToChange.west().south(), Block.getBlockById(54).getDefaultState());
     }
 }
