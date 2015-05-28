@@ -13,6 +13,7 @@ import net.minecraft.util.ChatComponentText;
 import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.island.Island;
 import com.sgs.skyblocks.island.IslandGenerator;
+import com.sgs.skyblocks.player.PlayerInfo;
 import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class SkyblockCommand implements ICommand{
@@ -50,9 +51,17 @@ public class SkyblockCommand implements ICommand{
 
 	@Override
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
+		EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
+		if(args.length == 0)
+		{
+			PlayerInfo playerInfo = PlayerInfo.getPlayerInfo(player);
+			BlockPos pos = playerInfo.getIsland().getLocation();
+			player.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+			sender.addChatMessage(new ChatComponentText("Welcome home"));
+			return;
+		}
 		if(args.length > 0)
 		{
-			EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
 			if(args[0].equalsIgnoreCase("join"))
 			{
 				BlockPos pos = new Island(player).getLocation();

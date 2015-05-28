@@ -10,10 +10,12 @@ import org.apache.logging.log4j.Level;
 
 import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.utils.SkyBlocksLogger;
+import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class IslandGenerator {
 	private SkyBlocksLogger logger = SkyBlocks.getLogger();
-	private int island_height = 50;
+	private static int island_height = 50;
+	private static int island_distance = 150;
 	public IslandGenerator() {
         logger.entering("createIsland", this.getClass().getName());
         logger.log(Level.INFO, "Finished creating player island.");
@@ -21,10 +23,43 @@ public class IslandGenerator {
 	}
 	public static BlockPos createIsland(final EntityPlayer player) {
 		IslandGenerator gen = new IslandGenerator();
-		BlockPos pos = player.getPosition();
+		BlockPos pos = getNextIslandPosition(getLastIslandPosition(player));
 		gen.generateIslandBlocks(pos.getX(), pos.getZ(), player, player.getEntityWorld());
         return new BlockPos(pos);
     }
+	private static BlockPos getLastIslandPosition(EntityPlayer player)
+	{
+		BlockPos last = SkyBlocksWorldData.getLastIslandBlockPos(player.getEntityWorld());
+		if(last != null)
+			return last;
+		return new BlockPos(0,island_height,0);
+	}
+	private static BlockPos getNextIslandPosition(BlockPos lastIsland) {
+		final int x = (int) lastIsland.getX();
+	    final int z = (int) lastIsland.getZ();
+	    if (x < z) {
+	        if (-1 * x < z) {
+	            lastIsland.add(island_distance, 0, 0);
+	            return lastIsland;
+	        }
+	        lastIsland.add(0, 0, island_distance);
+	        return lastIsland;
+	    } else if (x > z) {
+	        if (-1 * x >= z) {
+	            lastIsland.add(-island_distance, 0, 0);
+	            return lastIsland;
+	        }
+	        lastIsland.add(0, 0, -island_distance);
+	        return lastIsland;
+	    } else {
+	        if (x <= 0) {
+	            lastIsland.add(0, 0, island_distance);
+	            return lastIsland;
+	        }
+	        lastIsland.add(0, 0, -island_distance);
+	        return lastIsland;
+	    }
+	}
 	public void generateIslandBlocks(final int x, final int z, final EntityPlayer player, final World world) {
         final int y = island_height;
         BlockPos pos = new BlockPos(x, y, z);

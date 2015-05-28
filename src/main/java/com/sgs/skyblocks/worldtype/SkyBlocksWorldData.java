@@ -1,6 +1,8 @@
 package com.sgs.skyblocks.worldtype;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
@@ -35,6 +37,21 @@ public class SkyBlocksWorldData extends WorldSavedData {
 
     public NBTTagCompound getData() {
         return data;
+    }
+    
+    public static BlockPos getLastIslandBlockPos(World world)
+    {
+    	SkyBlocksWorldData data = forWorld(world);
+    	long position = data.getData().getLong("lastIsland");
+    	if(position != 0)
+    		return BlockPos.fromLong(position);
+    	return null;
+    }
+    
+    public static void setLastIslandBlockPos(World world, BlockPos pos)
+    {
+    	SkyBlocksWorldData data = forWorld(world);
+    	data.getData().setLong("lastIsland", pos.toLong());
     }
 
 }
