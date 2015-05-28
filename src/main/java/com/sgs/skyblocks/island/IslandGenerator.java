@@ -23,7 +23,8 @@ public class IslandGenerator {
 	}
 	public static BlockPos createIsland(final EntityPlayer player) {
 		IslandGenerator gen = new IslandGenerator();
-		BlockPos pos = getNextIslandPosition(getLastIslandPosition(player));
+		BlockPos pos = getLastIslandPosition(player);
+		SkyBlocksWorldData.setLastIslandBlockPos(player.getEntityWorld(), pos);
 		gen.generateIslandBlocks(pos.getX(), pos.getZ(), player, player.getEntityWorld());
         return new BlockPos(pos);
     }
@@ -31,33 +32,33 @@ public class IslandGenerator {
 	{
 		BlockPos last = SkyBlocksWorldData.getLastIslandBlockPos(player.getEntityWorld());
 		if(last != null)
-			return last;
+			return getNextIslandPosition(last);
 		return new BlockPos(0,island_height,0);
 	}
-	private static BlockPos getNextIslandPosition(BlockPos lastIsland) {
-		final int x = (int) lastIsland.getX();
-	    final int z = (int) lastIsland.getZ();
+	private static BlockPos getNextIslandPosition(BlockPos p) {
+		final int x = p.getX();
+	    final int z = p.getZ();
 	    if (x < z) {
 	        if (-1 * x < z) {
-	            lastIsland.add(island_distance, 0, 0);
-	            return lastIsland;
+	        	p = new BlockPos(p.getX()+island_distance, p.getY()+0, p.getZ()+0);
+	            return p;
 	        }
-	        lastIsland.add(0, 0, island_distance);
-	        return lastIsland;
+	        p = new BlockPos(p.getX(), p.getY(), p.getZ()+island_distance);
+	        return p;
 	    } else if (x > z) {
 	        if (-1 * x >= z) {
-	            lastIsland.add(-island_distance, 0, 0);
-	            return lastIsland;
+	        	p = new BlockPos(p.getX()-island_distance, p.getY(), p.getZ());
+	            return p;
 	        }
-	        lastIsland.add(0, 0, -island_distance);
-	        return lastIsland;
+	        p = new BlockPos(p.getX(), p.getY(), p.getZ()-island_distance);
+	        return p;
 	    } else {
 	        if (x <= 0) {
-	            lastIsland.add(0, 0, island_distance);
-	            return lastIsland;
+	        	p = new BlockPos(p.getX(), p.getY(), p.getZ()+island_distance);
+	            return p;
 	        }
-	        lastIsland.add(0, 0, -island_distance);
-	        return lastIsland;
+	        p = new BlockPos(p.getX(), p.getY(), p.getZ()-island_distance);
+	        return p;
 	    }
 	}
 	public void generateIslandBlocks(final int x, final int z, final EntityPlayer player, final World world) {

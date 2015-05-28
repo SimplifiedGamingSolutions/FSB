@@ -56,7 +56,7 @@ public class SkyblockCommand implements ICommand{
 		{
 			PlayerInfo playerInfo = PlayerInfo.getPlayerInfo(player);
 			BlockPos pos = playerInfo.getIsland().getLocation();
-			player.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+			player.setPositionAndUpdate(pos.getX()+2, pos.getY()+4, pos.getZ());
 			sender.addChatMessage(new ChatComponentText("Welcome home"));
 			return;
 		}
