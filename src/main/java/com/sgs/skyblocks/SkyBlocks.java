@@ -51,12 +51,20 @@ public class SkyBlocks
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-
+    	initializeConfig();
 		FMLCommonHandler.instance().bus().register(new PlayerRespawnHandler());
-		//MinecraftForge.EVENT_BUS.register(new ServerChatHandler(this));
     }
     
-    public static SkyBlocksLogger getLogger(){
+    private void initializeConfig()
+	{
+        SkyBlocks.configs.addCustomCategoryComment("island_chest_items", "Example add five cobblestone to chest 'I:4=5'");
+        SkyBlocks.configs.addCustomCategoryComment("island_configuration", "Basic Configurations for islands");
+        SkyBlocks.configs.getInt("island_height", "Island_Configuration", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");
+        SkyBlocks.configs.getInt("island_distance", "Island_Configuration", 150, 20, 255, "The distance between islands.");
+		SkyBlocks.configs.save();
+	}
+
+	public static SkyBlocksLogger getLogger(){
     	return SkyBlocksLogger.getLogger();
     }
     

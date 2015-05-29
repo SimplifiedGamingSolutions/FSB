@@ -1,14 +1,22 @@
 package com.sgs.skyblocks.island;
 
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Property;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.net.Facility;
@@ -19,12 +27,18 @@ import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class IslandGenerator {
 	private SkyBlocksLogger logger = SkyBlocks.getLogger();
-	private static int island_height = 50;
-	private static int island_distance = 150;
+	private static int island_height;
+	private static int island_distance;
 	public IslandGenerator() {
-        logger.entering("createIsland", this.getClass().getName());
-        logger.log(Level.INFO, "Finished creating player island.");
-        logger.exiting("createIsland", this.getClass().getName());
+        logger.entering("constructor", this.getClass().getName());
+        island_height = SkyBlocks.configs.getInt("island_height", "Island_Configuration", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");
+        island_distance = SkyBlocks.configs.getInt("island_distance", "Island_Configuration", 150, 20, 255, "The distance between islands.");
+        
+        if(SkyBlocks.configs.hasChanged())
+        {
+        	SkyBlocks.configs.save();
+        }
+        logger.exiting("constructor", this.getClass().getName());
 	}
 	public static Vec3 createIsland(final EntityPlayer player) {
 		IslandGenerator gen = new IslandGenerator();
@@ -77,7 +91,7 @@ public class IslandGenerator {
         this.islandLayer4(x, z, player, world);
         this.islandExtras(x, z, player, world);
     }
-	private void islandLayer1(final int x, final int z, final EntityPlayer player, final World world) {
+	private void islandLayer4(final int x, final int z, final EntityPlayer player, final World world) {
         int y = island_height + 4;
         for (int x_operate = x - 3; x_operate <= x + 3; ++x_operate) {
             for (int z_operate = z - 3; z_operate <= z + 3; ++z_operate) {
@@ -94,7 +108,7 @@ public class IslandGenerator {
         world.setBlockState(blockToChange2, Block.getStateById(0));
     }
 
-    private void islandLayer2(final int x, final int z, final EntityPlayer player, final World world) {
+    private void islandLayer3(final int x, final int z, final EntityPlayer player, final World world) {
         int y = island_height + 3;
         for (int x_operate = x - 2; x_operate <= x + 2; ++x_operate) {
             for (int z_operate = z - 2; z_operate <= z + 2; ++z_operate) {
@@ -114,7 +128,7 @@ public class IslandGenerator {
         world.setBlockState(blockToChange2, Block.getStateById(12));
     }
 
-    private void islandLayer3(final int x, final int z, final EntityPlayer player, final World world) {
+    private void islandLayer2(final int x, final int z, final EntityPlayer player, final World world) {
         int y = island_height + 2;
         for (int x_operate = x - 1; x_operate <= x + 1; ++x_operate) {
             for (int z_operate = z - 1; z_operate <= z + 1; ++z_operate) {
@@ -134,7 +148,7 @@ public class IslandGenerator {
         world.setBlockState(blockToChange2, Block.getStateById(12));
     }
 
-    private void islandLayer4(final int x, final int z, final EntityPlayer player, final World world) {
+    private void islandLayer1(final int x, final int z, final EntityPlayer player, final World world) {
         int y = island_height + 1;
         BlockPos blockToChange = new BlockPos(x - 1, y, z);
         world.setBlockState(blockToChange, Block.getStateById(3));
@@ -205,5 +219,25 @@ public class IslandGenerator {
         world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, island_height + 5, z + 1);
         world.setBlockState(blockToChange, Block.getStateById(54).withProperty(BlockChest.FACING, EnumFacing.SOUTH));
+        populateChest(world, blockToChange);
     }
+	private void populateChest(World world, BlockPos chestPosition)
+	{
+		TileEntityChest chest = (TileEntityChest)world.getTileEntity(chestPosition);
+		if(SkyBlocks.configs.getCategory("island_chest_items").isEmpty())
+		{
+			SkyBlocks.configs.get("island_chest_items", "4", 5, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.configs.save();
+		}
+		ConfigCategory cat = SkyBlocks.configs.getCategory("island_chest_items");
+		Map<String, Property> items = cat.getValues();
+		int i = 0;
+		for(String itemID : items.keySet())
+		{
+			int id = Integer.parseInt(itemID);
+			int amount = items.get(itemID).getInt();
+			chest.setInventorySlotContents(i, new ItemStack(Block.getBlockById(id), amount));
+			i++;
+		}
+	}
 }
