@@ -109,7 +109,7 @@ public class PlayerInfo implements Serializable{
 	
 	@Override
 	public String toString() {
-		return name +"\n"+island.getLocation().getX()+" "+island.getLocation().getY()+" "+island.getLocation().getZ()+"\n"+island.getCreationDate();
+		return name +"\n"+island.getHomeVector().xCoord+" "+island.getHomeVector().yCoord+" "+island.getHomeVector().zCoord+"\n"+island.getCreationDate();
 	}
     
 }

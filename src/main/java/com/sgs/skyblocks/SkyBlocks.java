@@ -1,7 +1,9 @@
 package com.sgs.skyblocks;
 
 import net.minecraft.world.WorldType;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -10,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import com.sgs.skyblocks.command.SkyblockCommand;
+import com.sgs.skyblocks.player.PlayerRespawnHandler;
 import com.sgs.skyblocks.utils.SkyBlocksLogger;
 import com.sgs.skyblocks.worldtype.CleanRoomWorldType;
 
@@ -48,7 +51,9 @@ public class SkyBlocks
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        
+
+		FMLCommonHandler.instance().bus().register(new PlayerRespawnHandler());
+		//MinecraftForge.EVENT_BUS.register(new ServerChatHandler(this));
     }
     
     public static SkyBlocksLogger getLogger(){

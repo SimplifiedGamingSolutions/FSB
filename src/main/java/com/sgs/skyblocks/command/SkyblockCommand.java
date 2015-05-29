@@ -7,8 +7,11 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 
 import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.island.Island;
@@ -51,28 +54,27 @@ public class SkyblockCommand implements ICommand{
 
 	@Override
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
-		EntityPlayer player = (EntityPlayer)sender.getCommandSenderEntity();
+		EntityPlayerMP player = (EntityPlayerMP)sender.getCommandSenderEntity();
 		if(args.length == 0)
 		{
 			PlayerInfo playerInfo = PlayerInfo.getPlayerInfo(player);
-			BlockPos pos = playerInfo.getIsland().getLocation();
-			player.setPositionAndUpdate(pos.getX()+2, pos.getY()+5, pos.getZ());
+			Island island = playerInfo.getIsland();
+			Vec3 pos = island.getHomeVector();
+			player.playerNetServerHandler.setPlayerLocation(pos.xCoord, pos.yCoord, pos.zCoord, island.getYaw(), island.getPitch());
 			sender.addChatMessage(new ChatComponentText("Welcome home"));
 			return;
 		}
 		if(args.length > 0)
 		{
-			if(args[0].equalsIgnoreCase("join"))
+			if(args[0].equalsIgnoreCase("pos"))
 			{
-				BlockPos pos = new Island(player).getLocation();
-				sender.addChatMessage(new ChatComponentText("Island Created at: " + pos.getX()+" "+pos.getY()+" "+pos.getZ()));
-				player.setPositionAndUpdate(pos.getX(), pos.getY()+1, pos.getZ());
+				sender.addChatMessage(new ChatComponentText("x:"+sender.getPositionVector().xCoord+" y:"+sender.getPositionVector().yCoord+" z:"+sender.getPositionVector().zCoord + " pitch:"+player.rotationPitch+" yaw:"+player.rotationYaw));
 			}
-			else if(args[0].equalsIgnoreCase("load"))
+			else if(args[0].equalsIgnoreCase("sethome"))
 			{
-				SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
-				BlockPos pos = BlockPos.fromLong(data.getData().getLong("location"));
-				sender.addChatMessage(new ChatComponentText("Island at location: "+ pos.getX()+" "+pos.getY()+" "+pos.getZ()));
+				PlayerInfo playerInfo = PlayerInfo.getPlayerInfo(player);
+				playerInfo.getIsland().setHome(player.getPositionVector(), player.rotationYaw, player.rotationPitch);
+				playerInfo.savePlayerInfo(player);
 			}
 		}
 	}

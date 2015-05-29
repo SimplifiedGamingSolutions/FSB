@@ -1,13 +1,17 @@
 package com.sgs.skyblocks.island;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.net.Facility;
 
 import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.utils.SkyBlocksLogger;
@@ -22,12 +26,13 @@ public class IslandGenerator {
         logger.log(Level.INFO, "Finished creating player island.");
         logger.exiting("createIsland", this.getClass().getName());
 	}
-	public static BlockPos createIsland(final EntityPlayer player) {
+	public static Vec3 createIsland(final EntityPlayer player) {
 		IslandGenerator gen = new IslandGenerator();
 		BlockPos pos = getLastIslandPosition(player);
 		SkyBlocksWorldData.setLastIslandBlockPos(player.getEntityWorld(), pos);
 		gen.generateIslandBlocks(pos.getX(), pos.getZ(), player, player.getEntityWorld());
-        return new BlockPos(pos);
+		Vec3 home = new Vec3(pos.getX()+.5, pos.getY()+5.5, pos.getZ()+2.5);
+        return home;
     }
 	private static BlockPos getLastIslandPosition(EntityPlayer player)
 	{
@@ -41,7 +46,7 @@ public class IslandGenerator {
 	    final int z = p.getZ();
 	    if (x < z) {
 	        if (-1 * x < z) {
-	        	p = new BlockPos(p.getX()+island_distance, p.getY()+0, p.getZ()+0);
+	        	p = new BlockPos(p.getX()+island_distance, p.getY(), p.getZ());
 	            return p;
 	        }
 	        p = new BlockPos(p.getX(), p.getY(), p.getZ()+island_distance);
@@ -76,17 +81,17 @@ public class IslandGenerator {
         int y = island_height + 4;
         for (int x_operate = x - 3; x_operate <= x + 3; ++x_operate) {
             for (int z_operate = z - 3; z_operate <= z + 3; ++z_operate) {
-                world.setBlockState(new BlockPos(x_operate, y, z_operate), Block.getBlockById(2).getDefaultState());
+                world.setBlockState(new BlockPos(x_operate, y, z_operate), Block.getStateById(2));
             }
         }
         BlockPos blockToChange2 = new BlockPos(x - 3, y, z + 3);
-        world.setBlockState(blockToChange2, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(0));
         blockToChange2 = new BlockPos(x - 3, y, z - 3);
-        world.setBlockState(blockToChange2, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(0));
         blockToChange2 = new BlockPos(x + 3, y, z - 3);
-        world.setBlockState(blockToChange2, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(0));
         blockToChange2 = new BlockPos(x + 3, y, z + 3);
-        world.setBlockState(blockToChange2, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(0));
     }
 
     private void islandLayer2(final int x, final int z, final EntityPlayer player, final World world) {
@@ -94,19 +99,19 @@ public class IslandGenerator {
         for (int x_operate = x - 2; x_operate <= x + 2; ++x_operate) {
             for (int z_operate = z - 2; z_operate <= z + 2; ++z_operate) {
                 final BlockPos blockToChange = new BlockPos(x_operate, y, z_operate);
-                world.setBlockState(blockToChange, Block.getBlockById(3).getDefaultState());
+                world.setBlockState(blockToChange, Block.getStateById(3));
             }
         }
         BlockPos blockToChange2 = new BlockPos(x - 3, y, z);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x + 3, y, z);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x, y, z - 3);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x, y, z + 3);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x, y, z);
-        world.setBlockState(blockToChange2, Block.getBlockById(12).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(12));
     }
 
     private void islandLayer3(final int x, final int z, final EntityPlayer player, final World world) {
@@ -114,91 +119,91 @@ public class IslandGenerator {
         for (int x_operate = x - 1; x_operate <= x + 1; ++x_operate) {
             for (int z_operate = z - 1; z_operate <= z + 1; ++z_operate) {
                 final BlockPos blockToChange = new BlockPos(x_operate, y, z_operate);
-                world.setBlockState(blockToChange, Block.getBlockById(3).getDefaultState());
+                world.setBlockState(blockToChange, Block.getStateById(3));
             }
         }
         BlockPos blockToChange2 = new BlockPos(x - 2, y, z);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x + 2, y, z);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x, y, z - 2);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x, y, z + 2);
-        world.setBlockState(blockToChange2, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(3));
         blockToChange2 = new BlockPos(x, y, z);
-        world.setBlockState(blockToChange2, Block.getBlockById(12).getDefaultState());
+        world.setBlockState(blockToChange2, Block.getStateById(12));
     }
 
     private void islandLayer4(final int x, final int z, final EntityPlayer player, final World world) {
         int y = island_height + 1;
         BlockPos blockToChange = new BlockPos(x - 1, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(3));
         blockToChange = new BlockPos(x + 1, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(3));
         blockToChange = new BlockPos(x, y, z - 1);
-        world.setBlockState(blockToChange, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(3));
         blockToChange = new BlockPos(x, y, z + 1);
-        world.setBlockState(blockToChange, Block.getBlockById(3).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(3));
         blockToChange = new BlockPos(x, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(12).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(12));
     }
 
     private void islandExtras(final int x, final int z, final EntityPlayer player, final World world) {
         int y = island_height;
         BlockPos blockToChange = new BlockPos(x, y + 5, z);
-        world.setBlockState(blockToChange, Block.getBlockById(17).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(17));
         blockToChange = new BlockPos(x, y + 6, z);
-        world.setBlockState(blockToChange, Block.getBlockById(17).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(17));
         blockToChange = new BlockPos(x, y + 7, z);
-        world.setBlockState(blockToChange, Block.getBlockById(17).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(17));
         y = island_height + 8;
         for (int x_operate = x - 2; x_operate <= x + 2; ++x_operate) {
             for (int z_operate = z - 2; z_operate <= z + 2; ++z_operate) {
                 blockToChange = new BlockPos(x_operate, y, z_operate);
-                world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+                world.setBlockState(blockToChange, Block.getStateById(18));
             }
         }
         blockToChange = new BlockPos(x + 2, y, z + 2);
-        world.setBlockState(blockToChange, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(0));
         blockToChange = new BlockPos(x + 2, y, z - 2);
-        world.setBlockState(blockToChange, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(0));
         blockToChange = new BlockPos(x - 2, y, z + 2);
-        world.setBlockState(blockToChange, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(0));
         blockToChange = new BlockPos(x - 2, y, z - 2);
-        world.setBlockState(blockToChange, Block.getBlockById(0).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(0));
         blockToChange = new BlockPos(x, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(17).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(17));
         y = island_height + 9;
         for (int x_operate = x - 1; x_operate <= x + 1; ++x_operate) {
             for (int z_operate = z - 1; z_operate <= z + 1; ++z_operate) {
                 blockToChange = new BlockPos(x_operate, y, z_operate);
-                world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+                world.setBlockState(blockToChange, Block.getStateById(18));
             }
         }
         blockToChange = new BlockPos(x - 2, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x + 2, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, y, z - 2);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, y, z + 2);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(17).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(17));
         y = island_height + 10;
         blockToChange = new BlockPos(x - 1, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x + 1, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, y, z - 1);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, y, z + 1);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, y, z);
-        world.setBlockState(blockToChange, Block.getBlockById(17).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(17));
         blockToChange = new BlockPos(x, y + 1, z);
-        world.setBlockState(blockToChange, Block.getBlockById(18).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(18));
         blockToChange = new BlockPos(x, island_height + 5, z + 1);
-        world.setBlockState(blockToChange.west().south(), Block.getBlockById(54).getDefaultState());
+        world.setBlockState(blockToChange, Block.getStateById(54).withProperty(BlockChest.FACING, EnumFacing.SOUTH));
     }
 }
