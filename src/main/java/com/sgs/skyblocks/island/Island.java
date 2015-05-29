@@ -10,17 +10,16 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.Vec3;
 
+import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
+
 public class Island implements Serializable{
 	private static final long serialVersionUID = -2764714174014196528L;
 	
-	private String player;
 	private double x;
 	private double y;
 	private double z;
@@ -29,7 +28,6 @@ public class Island implements Serializable{
 	private LocalDateTime created;
 	
 	public Island(EntityPlayer player) {
-		this.player = player.getName();
 		this.created = LocalDateTime.now();
 		SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
 		data.getData().setLong("location", player.getPosition().toLong());

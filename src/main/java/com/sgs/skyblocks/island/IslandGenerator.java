@@ -1,11 +1,9 @@
 package com.sgs.skyblocks.island;
 
-import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -14,12 +12,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Property;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.net.Facility;
 
 import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.utils.SkyBlocksLogger;
@@ -31,12 +25,12 @@ public class IslandGenerator {
 	private static int island_distance;
 	public IslandGenerator() {
         logger.entering("constructor", this.getClass().getName());
-        island_height = SkyBlocks.configs.getInt("island_height", "Island_Configuration", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");
-        island_distance = SkyBlocks.configs.getInt("island_distance", "Island_Configuration", 150, 20, 255, "The distance between islands.");
+        island_height = SkyBlocks.config.getInt("island_height", "island_location_config", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");
+        island_distance = SkyBlocks.config.getInt("island_distance", "island_location_config", 150, 20, 255, "The distance between islands.");
         
-        if(SkyBlocks.configs.hasChanged())
+        if(SkyBlocks.config.hasChanged())
         {
-        	SkyBlocks.configs.save();
+        	SkyBlocks.config.save();
         }
         logger.exiting("constructor", this.getClass().getName());
 	}
@@ -224,12 +218,12 @@ public class IslandGenerator {
 	private void populateChest(World world, BlockPos chestPosition)
 	{
 		TileEntityChest chest = (TileEntityChest)world.getTileEntity(chestPosition);
-		if(SkyBlocks.configs.getCategory("island_chest_items").isEmpty())
+		if(SkyBlocks.config.getCategory("island_chest_config").isEmpty())
 		{
-			SkyBlocks.configs.get("island_chest_items", "4", 5, "Example add five cobblestone to chest 'I:4=5'");
-			SkyBlocks.configs.save();
+			SkyBlocks.config.get("island_chest_items", "4", 5, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.save();
 		}
-		ConfigCategory cat = SkyBlocks.configs.getCategory("island_chest_items");
+		ConfigCategory cat = SkyBlocks.config.getCategory("island_chest_config");
 		Map<String, Property> items = cat.getValues();
 		int i = 0;
 		for(String itemID : items.keySet())

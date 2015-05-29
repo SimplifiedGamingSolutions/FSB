@@ -1,9 +1,5 @@
 package com.sgs.skyblocks.worldtype;
 
-import com.sgs.skyblocks.island.Island;
-import com.sgs.skyblocks.player.PlayerInfo;
-
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;

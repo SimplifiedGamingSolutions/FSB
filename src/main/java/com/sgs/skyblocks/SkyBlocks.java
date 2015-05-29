@@ -1,7 +1,8 @@
 package com.sgs.skyblocks;
 
+import java.io.File;
+
 import net.minecraft.world.WorldType;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +21,8 @@ import com.sgs.skyblocks.worldtype.CleanRoomWorldType;
 public class SkyBlocks
 {
     public static WorldType CleanRoom = new CleanRoomWorldType("CleanRoom");
-    public static Configuration configs;
+    public static Configuration config;
+    public static Configuration islandConfig;
     public static SkyBlocks instance;
     private SkyBlocksLogger logger;
 
@@ -28,7 +30,8 @@ public class SkyBlocks
     public void preInit(FMLPreInitializationEvent event) {
     	instance = this;
         logger = new SkyBlocksLogger(event.getModLog());
-        configs = new Configuration(event.getSuggestedConfigurationFile());
+        config = new Configuration(event.getSuggestedConfigurationFile());
+        islandConfig = new Configuration(new File(event.getModConfigurationDirectory(),"IslandConfig.cfg"));
     }
     
     @EventHandler
@@ -39,7 +42,7 @@ public class SkyBlocks
     
     @EventHandler
     public void Load(FMLInitializationEvent event){
-        configs.load();
+        config.load();
     	logger.logInfo("loaded");
     }
     
@@ -57,11 +60,12 @@ public class SkyBlocks
     
     private void initializeConfig()
 	{
-        SkyBlocks.configs.addCustomCategoryComment("island_chest_items", "Example add five cobblestone to chest 'I:4=5'");
-        SkyBlocks.configs.addCustomCategoryComment("island_configuration", "Basic Configurations for islands");
-        SkyBlocks.configs.getInt("island_height", "Island_Configuration", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");
-        SkyBlocks.configs.getInt("island_distance", "Island_Configuration", 150, 20, 255, "The distance between islands.");
-		SkyBlocks.configs.save();
+        SkyBlocks.config.addCustomCategoryComment("island_chest_config", "Example add five cobblestone to chest 'I:4=5'");
+        SkyBlocks.config.addCustomCategoryComment("island_location_config", "Basic Configurations for islands");
+        SkyBlocks.config.addCustomCategoryComment("island_achievements_config", "Add or remove custom achievements with the categories: obtain, break, kill");
+        SkyBlocks.config.getInt("island_height", "island_location_config", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");
+        SkyBlocks.config.getInt("island_distance", "island_location_config", 150, 20, 255, "The distance between islands.");
+		SkyBlocks.config.save();
 	}
 
 	public static SkyBlocksLogger getLogger(){

@@ -6,18 +6,13 @@ import java.util.List;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 
-import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.island.Island;
-import com.sgs.skyblocks.island.IslandGenerator;
 import com.sgs.skyblocks.player.PlayerInfo;
-import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class SkyblockCommand implements ICommand{
 
