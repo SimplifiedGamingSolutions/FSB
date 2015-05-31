@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sgs.skyblocks.SkyBlocks;
+import com.sgs.skyblocks.utils.InventoryParser;
 
 import scala.actors.threadpool.Arrays;
 import net.minecraft.entity.player.EntityPlayer;
@@ -228,63 +229,42 @@ public class IslandAchievement
 	public void Complete(EntityPlayerMP player) {
 		if(type.equalsIgnoreCase("onPlayer"))
 		{
-			if(!hasCompleted(player.getName()))
-			{
-				if(checkInventory(player))
-				{
-					player.addChatComponentMessage(new ChatComponentText(rewardText));
-					player.addStat(achievement, 1);
-				}
-			}
-			else if(isRepeatable())
-			{
-				if(checkInventory(player))
-				{
-					player.addChatComponentMessage(new ChatComponentText(rewardText));
-				}
-			}
-			else
-			{
-				player.addChatComponentMessage(new ChatComponentText("Achievement not repeatable."));
-			}
+			processOnPlayerChallenge(player);
 		}
 	}
-
-	private boolean checkInventory(EntityPlayerMP player) {
-		List<ItemStack> inventory = Arrays.asList(player.inventory.mainInventory);
-		int i = 0;
-		boolean passing = true;
-		while(passing && i < requiredItems.length)
-		{
-			if(player.inventory.hasItem(requiredItems[i].getItem()))
-			{
-				int amount = 0;
-				for(ItemStack item : inventory)
-				{
-					if(item != null && item.getItem().equals(requiredItems[i].getItem()))
-					{
-						amount += item.stackSize;
-					}
+	
+	private void processOnPlayerChallenge(EntityPlayerMP player) {
+		InventoryParser IP = new InventoryParser(player);
+		if(!hasCompleted(player.getName())){
+			if(IP.hasItems(requiredItems, true)){
+				if(!canKeepItems){
+					IP.removeItems(requiredItems);
 				}
-				if(amount >= requiredItems[i].stackSize)
-				{
-					passing = true;
-					i++;
+				for(ItemStack item : itemReward){
+					IP.addItemStack(item);
 				}
-				else{
-					passing = false;
+				//todo add xp
+				player.addStat(achievement, 1);
+				player.addChatComponentMessage(new ChatComponentText(rewardText));
+			}
+		}
+		else if(isRepeatable()){
+			if(IP.hasItems(requiredItems, true)){
+				if(!canKeepItems){
+					IP.removeItems(requiredItems);
 				}
+				for(ItemStack item : repeatItemReward){
+					IP.addItemStack(item);
+				}
+				//todo add xp
+				player.addStat(achievement, 1);
+				player.addChatComponentMessage(new ChatComponentText(rewardText));
 				
 			}
-			else
-			{
-				passing = false;
-			}
 		}
-		if(!passing)
+		else
 		{
-			player.addChatComponentMessage(new ChatComponentText("Sorry, you don't have enough '"+Item.itemRegistry.getNameForObject(requiredItems[i].getItem()).toString().substring(10)+"' You need '"+requiredItems[i].stackSize+"'"));
+			player.addChatComponentMessage(new ChatComponentText("Achievement not repeatable."));
 		}
-		return passing;
 	}
 }
