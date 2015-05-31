@@ -11,6 +11,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.Vec3;
 
+import com.sgs.skyblocks.achievements.IslandAchievements;
 import com.sgs.skyblocks.island.Island;
 import com.sgs.skyblocks.player.PlayerInfo;
 
@@ -70,6 +71,16 @@ public class SkyblockCommand implements ICommand{
 				PlayerInfo playerInfo = PlayerInfo.getPlayerInfo(player);
 				playerInfo.getIsland().setHome(player.getPositionVector(), player.rotationYaw, player.rotationPitch);
 				playerInfo.savePlayerInfo(player);
+			}
+		}
+		if(args.length == 2)
+		{
+			if(args[0].equalsIgnoreCase("complete"))
+			{
+				for(String key : IslandAchievements.achievements.keySet())
+				{
+					IslandAchievements.achievements.get(args[1].toLowerCase()).Complete(player);
+				}
 			}
 		}
 	}
