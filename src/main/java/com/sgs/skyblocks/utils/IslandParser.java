@@ -24,7 +24,7 @@ public class IslandParser {
 	public IslandParser(EntityPlayerMP player){
 		this.island = PlayerInfo.getPlayerInfo(player).getIsland();
 		this.player = player;
-		this.range = SkyBlocks.config.getInt("island_distance", "island_location_config", 150, 20, 255, "The distance between islands.");
+		this.range = SkyBlocks.config.getInt("range", "island_location_config", 25, 1, 100, "range to search for onIsland challenges, can be slow over 100.")
 		parseIsland();
 	}
 
@@ -49,9 +49,9 @@ public class IslandParser {
 				}
 			}
 		}
-		for(Entry<Integer, Integer> block : blocks.entrySet()){
+		/*for(Entry<Integer, Integer> block : blocks.entrySet()){
 			player.addChatComponentMessage(new ChatComponentText(block.getKey()+":"+block.getValue()));
-		}
+		}*/
 	}
 	
 	public boolean hasBlock(ItemStack block){

@@ -77,10 +77,7 @@ public class SkyblockCommand implements ICommand{
 		{
 			if(args[0].equalsIgnoreCase("complete"))
 			{
-				for(String key : IslandAchievements.achievements.keySet())
-				{
-					IslandAchievements.achievements.get(args[1].toLowerCase()).Complete(player);
-				}
+				IslandAchievements.achievements.get(args[1].toLowerCase()).Complete(player);
 			}
 		}
 	}

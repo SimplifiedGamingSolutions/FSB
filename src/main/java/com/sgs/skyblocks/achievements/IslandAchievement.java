@@ -65,22 +65,31 @@ public class IslandAchievement
 		this.currencyReward = currencyReward;
 		this.xpReward = xpReward;
 		this.repeatable = repeatable;
-
-		this.repeatItemReward = new ItemStack[repeatItemReward.length];
-		for(int i = 0; i < repeatItemReward.length; i++)
+		if(repeatable)
 		{
-			String[] item = repeatItemReward[i].split(":");
-			this.repeatItemReward[i] = new ItemStack(Item.getByNameOrId(item[0]), Integer.parseInt(item[1]));
+			this.repeatItemReward = new ItemStack[repeatItemReward.length];
+			for(int i = 0; i < repeatItemReward.length; i++)
+			{
+				String[] item = repeatItemReward[i].split(":");
+				if(item.length == 3)
+					this.repeatItemReward[i] = new ItemStack(Item.getByNameOrId(item[0]+":"+item[1]), Integer.parseInt(item[2]));
+				else
+					this.repeatItemReward[i] = new ItemStack(Item.getByNameOrId(item[0]), Integer.parseInt(item[1]));
+			}
+			this.repeatItemRewardText = repeatItemRewardText;
+			this.repeatCurrencyReward = repeatCurrencyReward;
+			this.repeatXpReward = repeatXpReward;
 		}
-		this.repeatItemRewardText = repeatItemRewardText;
-		this.repeatCurrencyReward = repeatCurrencyReward;
-		this.repeatXpReward = repeatXpReward;
         LanguageRegistry.instance().addStringLocalization("achievement."+name, name);
         LanguageRegistry.instance().addStringLocalization("achievement."+name+".desc", "en_US", description);
-		this.achievement = new Achievement(description, name, 0, 0, Blocks.grass, null);
 		
 	}
 
+	public Achievement setAchievement(Achievement achievement){
+		this.achievement = achievement;
+		return this.achievement;
+	}
+	
 	public Achievement getAchievement()
 	{
 		return achievement;
@@ -232,6 +241,10 @@ public class IslandAchievement
 		{
 			processOnPlayerChallenge(player);
 		}
+		else if(type.equalsIgnoreCase("onIsland"))
+		{
+			processOnIslandChallenge(player);
+		}
 	}
 	
 	private void processOnPlayerChallenge(EntityPlayerMP player) {
@@ -273,11 +286,11 @@ public class IslandAchievement
 		if(!hasCompleted(player.getName())){
 			if(IP.hasBlocks(requiredItems, true)){
 				InventoryParser inv = new InventoryParser(player);
-				for(ItemStack item : repeatItemReward){
+				for(ItemStack item : itemReward){
 					inv.addItemStack(item);
 				}
 				//Island.getIsland(owner.getName()).addXP(challenge.getXpReward());
-				//finalizeComplete();
+				player.addChatComponentMessage(new ChatComponentText("Challenge Complete! Here is your reward!"));
 			}
 		}
 		else if(hasCompleted(player.getName()) && isRepeatable()){
@@ -287,7 +300,7 @@ public class IslandAchievement
 					inv.addItemStack(item);
 				}
 				//Island.getIsland(owner.getName()).addXP(challenge.getRepeatXpReward());
-				//owner.notice(ChatFormat.GREEN+"Challenge Complete! Here is your reward!");
+				player.addChatComponentMessage(new ChatComponentText("Challenge Complete! Here is your reward!"));
 				
 			}
 		}	
