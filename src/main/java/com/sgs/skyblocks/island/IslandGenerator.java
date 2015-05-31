@@ -23,6 +23,7 @@ public class IslandGenerator {
 	private SkyBlocksLogger logger = SkyBlocks.getLogger();
 	private static int island_height;
 	private static int island_distance;
+	
 	public IslandGenerator() {
         logger.entering("constructor", this.getClass().getName());
         island_height = SkyBlocks.config.getInt("island_height", "island_location_config", 58, 0, 250, "The height of the base of the island. The island is conscructed from bottom to top.");

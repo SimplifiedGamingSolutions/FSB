@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.sgs.skyblocks.SkyBlocks;
 import com.sgs.skyblocks.utils.InventoryParser;
+import com.sgs.skyblocks.utils.IslandParser;
 
 import scala.actors.threadpool.Arrays;
 import net.minecraft.entity.player.EntityPlayer;
@@ -266,5 +267,29 @@ public class IslandAchievement
 		{
 			player.addChatComponentMessage(new ChatComponentText("Achievement not repeatable."));
 		}
+	}
+	private void processOnIslandChallenge(EntityPlayerMP player) {
+		IslandParser IP = new IslandParser(player);
+		if(!hasCompleted(player.getName())){
+			if(IP.hasBlocks(requiredItems, true)){
+				InventoryParser inv = new InventoryParser(player);
+				for(ItemStack item : repeatItemReward){
+					inv.addItemStack(item);
+				}
+				//Island.getIsland(owner.getName()).addXP(challenge.getXpReward());
+				//finalizeComplete();
+			}
+		}
+		else if(hasCompleted(player.getName()) && isRepeatable()){
+			if(IP.hasBlocks(requiredItems, true)){
+				InventoryParser inv = new InventoryParser(player);
+				for(ItemStack item : repeatItemReward){
+					inv.addItemStack(item);
+				}
+				//Island.getIsland(owner.getName()).addXP(challenge.getRepeatXpReward());
+				//owner.notice(ChatFormat.GREEN+"Challenge Complete! Here is your reward!");
+				
+			}
+		}	
 	}
 }

@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.sgs.skyblocks.island.Island;
@@ -23,13 +24,13 @@ public class PlayerInfo implements Serializable{
 	private Island island;
 	private LocalDateTime created;
 	
-	public PlayerInfo(EntityPlayer player, Island island) {
+	public PlayerInfo(EntityPlayerMP player, Island island) {
 		this.name = player.getName();
 		this.island = island;
 		savePlayerInfo(player);
 	}
 
-	public static PlayerInfo getPlayerInfo(EntityPlayer player)
+	public static PlayerInfo getPlayerInfo(EntityPlayerMP player)
 	{
 		NBTTagCompound data = SkyBlocksWorldData.forWorld(player.getEntityWorld()).getData();
 		byte[] rawPlayerInfo = data.getByteArray(player.getName());
