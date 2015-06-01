@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
@@ -239,7 +240,7 @@ public class IslandGenerator {
 		{
 			int id = Integer.parseInt(itemID);
 			int amount = items.get(itemID).getInt();
-			chest.setInventorySlotContents(i, new ItemStack(Block.getBlockById(id), amount));
+			chest.setInventorySlotContents(i, new ItemStack(Item.getItemById(id), amount));
 			i++;
 		}
 	}
