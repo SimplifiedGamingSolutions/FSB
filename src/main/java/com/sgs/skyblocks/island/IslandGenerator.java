@@ -219,12 +219,20 @@ public class IslandGenerator {
 	private void populateChest(World world, BlockPos chestPosition)
 	{
 		TileEntityChest chest = (TileEntityChest)world.getTileEntity(chestPosition);
-		if(SkyBlocks.config.getCategory("island_chest_config").isEmpty())
+		if(SkyBlocks.config.getCategory("island_chest_items").isEmpty())
 		{
-			SkyBlocks.config.get("island_chest_items", "4", 5, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "79", 2, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "360", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "81", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "327", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "40", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "39", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "361", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "338", 1, "Example add five cobblestone to chest 'I:4=5'");
+			SkyBlocks.config.get("island_chest_items", "323", 1, "Example add five cobblestone to chest 'I:4=5'");
 			SkyBlocks.config.save();
 		}
-		ConfigCategory cat = SkyBlocks.config.getCategory("island_chest_config");
+		ConfigCategory cat = SkyBlocks.config.getCategory("island_chest_items");
 		Map<String, Property> items = cat.getValues();
 		int i = 0;
 		for(String itemID : items.keySet())
