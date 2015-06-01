@@ -71,7 +71,7 @@ public class SkyBlocks
         Achievement[] list = islandAchievements.getAchievementsList();
         AchievementPage achPage = new AchievementPage("SkyBlocks", list);
         AchievementPage.registerAchievementPage(achPage);
-		FMLCommonHandler.instance().bus().register(new PlayerRespawnHandler());
+        new PlayerRespawnHandler();
     }
     
     private void initializeConfig()
