@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sgs.skyblocks.SkyBlocks;
+import com.sgs.skyblocks.player.PlayerInfo;
 import com.sgs.skyblocks.utils.InventoryParser;
 import com.sgs.skyblocks.utils.IslandParser;
 
@@ -232,8 +233,8 @@ public class IslandAchievement
 	}
 
 
-	public boolean hasCompleted(String owner_name) {
-		return false;
+	public boolean hasCompleted(EntityPlayerMP player) {
+		return PlayerInfo.getPlayerInfo(player).getIsland().hasCompleted(getName());
 	}
 
 	public void Complete(EntityPlayerMP player) {
@@ -249,7 +250,7 @@ public class IslandAchievement
 	
 	private void processOnPlayerChallenge(EntityPlayerMP player) {
 		InventoryParser IP = new InventoryParser(player);
-		if(!hasCompleted(player.getName())){
+		if(!hasCompleted(player)){
 			if(IP.hasItems(requiredItems, true)){
 				if(!canKeepItems){
 					IP.removeItems(requiredItems);
@@ -259,6 +260,9 @@ public class IslandAchievement
 				}
 				//todo add xp
 				player.addStat(achievement, 1);
+				PlayerInfo info = PlayerInfo.getPlayerInfo(player);
+				info.getIsland().completeChallenge(getName());
+				info.savePlayerInfo(player);
 				player.addChatComponentMessage(new ChatComponentText(rewardText));
 			}
 		}
@@ -272,6 +276,9 @@ public class IslandAchievement
 				}
 				//todo add xp
 				player.addStat(achievement, 1);
+				PlayerInfo info = PlayerInfo.getPlayerInfo(player);
+				info.getIsland().completeChallenge(getName());
+				info.savePlayerInfo(player);
 				player.addChatComponentMessage(new ChatComponentText(rewardText));
 				
 			}
@@ -283,22 +290,28 @@ public class IslandAchievement
 	}
 	private void processOnIslandChallenge(EntityPlayerMP player) {
 		IslandParser IP = new IslandParser(player);
-		if(!hasCompleted(player.getName())){
+		if(!hasCompleted(player)){
 			if(IP.hasBlocks(requiredItems, true)){
 				InventoryParser inv = new InventoryParser(player);
 				for(ItemStack item : itemReward){
 					inv.addItemStack(item);
 				}
+				PlayerInfo info = PlayerInfo.getPlayerInfo(player);
+				info.getIsland().completeChallenge(getName());
+				info.savePlayerInfo(player);
 				//Island.getIsland(owner.getName()).addXP(challenge.getXpReward());
 				player.addChatComponentMessage(new ChatComponentText("Challenge Complete! Here is your reward!"));
 			}
 		}
-		else if(hasCompleted(player.getName()) && isRepeatable()){
+		else if(hasCompleted(player) && isRepeatable()){
 			if(IP.hasBlocks(requiredItems, true)){
 				InventoryParser inv = new InventoryParser(player);
 				for(ItemStack item : repeatItemReward){
 					inv.addItemStack(item);
 				}
+				PlayerInfo info = PlayerInfo.getPlayerInfo(player);
+				info.getIsland().completeChallenge(getName());
+				info.savePlayerInfo(player);
 				//Island.getIsland(owner.getName()).addXP(challenge.getRepeatXpReward());
 				player.addChatComponentMessage(new ChatComponentText("Challenge Complete! Here is your reward!"));
 				

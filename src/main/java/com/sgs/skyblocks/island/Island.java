@@ -9,6 +9,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
@@ -20,6 +22,7 @@ import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 public class Island implements Serializable{
 	private static final long serialVersionUID = -2764714174014196528L;
 	
+	private HashSet<String> completedChallenges = new HashSet<String>();
 	private double x;
 	private double y;
 	private double z;
@@ -137,5 +140,14 @@ public class Island implements Serializable{
 
 	public LocalDateTime getCreationDate() {
 		return created;
+	}
+	
+	public void completeChallenge(String challenge)
+	{
+		completedChallenges.add(challenge);
+	}
+
+	public boolean hasCompleted(String challenge) {
+		return completedChallenges.contains(challenge);
 	}
 }
