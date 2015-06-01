@@ -24,7 +24,9 @@ public class IslandParser {
 	public IslandParser(EntityPlayerMP player){
 		this.island = PlayerInfo.getPlayerInfo(player).getIsland();
 		this.player = player;
-		this.range = SkyBlocks.config.getInt("range", "island_location_config", 25, 1, 100, "range to search for onIsland challenges, can be slow over 100.")
+		this.range = SkyBlocks.config.getInt("range", "island_location_config", 25, 1, 100, "range to search for onIsland challenges, can be slow over 100.");
+		if(SkyBlocks.config.hasChanged())
+			SkyBlocks.config.save();
 		parseIsland();
 	}
 
