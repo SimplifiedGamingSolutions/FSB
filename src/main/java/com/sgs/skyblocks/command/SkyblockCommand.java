@@ -8,6 +8,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
@@ -100,6 +101,29 @@ public class SkyblockCommand implements ICommand{
 				if(args[0].equalsIgnoreCase("complete"))
 				{
 					IslandAchievements.achievements.get(args[1].toLowerCase()).Complete(player);
+				}
+				else if(args[0].equalsIgnoreCase("challenge"))
+				{	
+					IslandAchievement ach = IslandAchievements.achievements.get(args[1].toLowerCase());
+					if(!ach.getType().equalsIgnoreCase("islandlevel"))
+					{
+						sender.addChatMessage(new ChatComponentText("----------------------------------------").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE)));
+						sender.addChatMessage(new ChatComponentText("Challenge: "+ach.getName()).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE).setBold(true)));
+						sender.addChatMessage(new ChatComponentText(String.format("%1$-19s %2$-15s %3$-10s", "Difficulty: "+ach.getRankLevel(), "Type: "+ach.getType(), "Repeatable: "+ach.isRepeatable())).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE).setBold(true)));
+						sender.addChatMessage(new ChatComponentText(ach.getDescription()).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY).setBold(false)));
+						sender.addChatMessage(new ChatComponentText("Rewards: ").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE)));
+						for(ItemStack item : ach.getItemReward())
+						{
+							ChatComponentText message = new ChatComponentText(String.format("%1$-15s %2$-13s", item.getDisplayName(), item.stackSize));
+								sender.addChatMessage(message.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)));
+						}
+						sender.addChatMessage(new ChatComponentText("Requirements:").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.WHITE)));
+						for(ItemStack item : ach.getRequiredItems())
+						{
+							ChatComponentText message = new ChatComponentText(String.format("%1$-15s %2$-13s", item.getDisplayName(), item.stackSize));
+								sender.addChatMessage(message.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_RED)));
+						}
+					}
 				}
 				break;
 		}
