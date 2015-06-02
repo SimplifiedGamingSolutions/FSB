@@ -50,7 +50,13 @@ public class IslandGenerator {
 	{
 		BlockPos last = SkyBlocksWorldData.getLastIslandBlockPos(player.getEntityWorld());
 		if(last != null)
-			return getNextIslandPosition(last);
+		{
+			BlockPos pos = SkyBlocksWorldData.removeLastOrphanedIslandOrigin(player);
+			if(pos != null)
+				return pos;
+			else
+				return getNextIslandPosition(last);
+		}
 		return new BlockPos(0,island_height,0);
 	}
 	private static BlockPos getNextIslandPosition(BlockPos p) {
@@ -268,6 +274,7 @@ public class IslandGenerator {
 	        }
 			player.addChatComponentMessage(new ChatComponentText("island erased"));
 		}
+		SkyBlocksWorldData.addOrphanedIsland(player, origin);
         
 	}
 }

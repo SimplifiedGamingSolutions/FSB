@@ -1,6 +1,9 @@
 package com.sgs.skyblocks.worldtype;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import com.sgs.skyblocks.utils.Utils;
 
@@ -89,6 +92,39 @@ public class SkyBlocksWorldData extends WorldSavedData {
 			islands = new HashMap<String, Long>();
 		}
 		return BlockPos.fromLong(islands.get(player.getName()));
+	}
+
+	public static void addOrphanedIsland(EntityPlayer player, BlockPos pos) {
+
+		SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
+		byte[] islandsbytes = data.getData().getByteArray("orphaned_islands");
+		PriorityQueue<Long> islands;
+		if(islandsbytes.length != 0)
+		{
+			islands = (PriorityQueue<Long>)Utils.fromBytes(islandsbytes);
+		}
+		else
+		{
+			islands = new PriorityQueue<Long>();
+		}
+		islands.add(pos.toLong());
+		data.getData().setByteArray("orphaned_islands", Utils.toBytes(islands));
+		data.markDirty();
+	}
+
+	public static BlockPos removeLastOrphanedIslandOrigin(EntityPlayer player) {
+		SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
+		byte[] islandsbytes = data.getData().getByteArray("orphaned_islands");
+		PriorityQueue<Long> islands;
+		if(islandsbytes.length != 0)
+		{
+			islands = (PriorityQueue<Long>)Utils.fromBytes(islandsbytes);
+		}
+		else
+		{
+			islands = new PriorityQueue<Long>();
+		}
+		return BlockPos.fromLong(islands.poll());
 	}
 
 }
