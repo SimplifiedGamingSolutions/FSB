@@ -9,6 +9,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.Vec3;
 
+import com.sgs.skyblocks.utils.Utils;
 import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class Island implements Serializable{
@@ -32,10 +35,10 @@ public class Island implements Serializable{
 	
 	public Island(EntityPlayer player) {
 		this.created = LocalDateTime.now();
-		SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
-		data.getData().setLong("location", player.getPosition().toLong());
-		data.markDirty();
-		setHome(IslandGenerator.createIsland(player), -180F, 50F);
+		BlockPos pos = IslandGenerator.createIsland(player);
+		SkyBlocksWorldData.addIsland(player, pos);
+		
+		setHome(new Vec3(pos.getX()+.5, pos.getY()+5.5, pos.getZ()+2.5), -180F, 50F);
 		player.addChatMessage(new ChatComponentText("Island created!"));
 	}
 	
@@ -84,58 +87,9 @@ public class Island implements Serializable{
 		return new BlockPos(x,y,z);
 	}
 	
-	public byte[] toBytes(){
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutput out = null;
-		try {
-		  out = new ObjectOutputStream(bos);   
-		  out.writeObject(this);
-		  return bos.toByteArray();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-		  try {
-		    if (out != null) {
-		      out.close();
-		    }
-		  } catch (IOException ex) {
-		    // ignore close exception
-		  }
-		  try {
-		    bos.close();
-		  } catch (IOException ex) {
-		    // ignore close exception
-		  }
-		}
-		return null;
-	}
-	
 	public static Island fromBytes(byte[] bytes)
 	{
-		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-		ObjectInput in = null;
-		try {
-		  in = new ObjectInputStream(bis);
-		  return (Island)in.readObject();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-		  try {
-		    bis.close();
-		  } catch (IOException ex) {
-		    // ignore close exception
-		  }
-		  try {
-		    if (in != null) {
-		      in.close();
-		    }
-		  } catch (IOException ex) {
-		    // ignore close exception
-		  }
-		}
-		return null;
+		return (Island)Utils.fromBytes(bytes);
 	}
 
 	public LocalDateTime getCreationDate() {

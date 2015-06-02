@@ -1,5 +1,10 @@
 package com.sgs.skyblocks.worldtype;
 
+import java.util.HashMap;
+
+import com.sgs.skyblocks.utils.Utils;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -52,5 +57,38 @@ public class SkyBlocksWorldData extends WorldSavedData {
     	SkyBlocksWorldData data = forWorld(world);
     	data.getData().setLong("lastIsland", pos.toLong());
     }
+
+	public static void addIsland(EntityPlayer player, BlockPos pos) {
+
+		SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
+		byte[] islandsbytes = data.getData().getByteArray("islands");
+		HashMap<String, Long> islands;
+		if(islandsbytes.length != 0)
+		{
+			islands = (HashMap<String, Long>)Utils.fromBytes(islandsbytes);
+		}
+		else
+		{
+			islands = new HashMap<String, Long>();
+		}
+		islands.put(player.getName(), pos.toLong());
+		data.getData().setByteArray("islands", Utils.toBytes(islands));
+		data.markDirty();
+	}
+
+	public static BlockPos getIslandOrigin(EntityPlayer player) {
+		SkyBlocksWorldData data = SkyBlocksWorldData.forWorld(player.getEntityWorld());
+		byte[] islandsbytes = data.getData().getByteArray("islands");
+		HashMap<String, Long> islands;
+		if(islandsbytes.length != 0)
+		{
+			islands = (HashMap<String, Long>)Utils.fromBytes(islandsbytes);
+		}
+		else
+		{
+			islands = new HashMap<String, Long>();
+		}
+		return BlockPos.fromLong(islands.get(player.getName()));
+	}
 
 }

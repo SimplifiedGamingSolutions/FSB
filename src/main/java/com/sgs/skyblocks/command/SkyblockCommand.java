@@ -76,6 +76,10 @@ public class SkyblockCommand implements ICommand{
 					info.getIsland().setHome(player.getPositionVector(), player.rotationYaw, player.rotationPitch);
 					info.savePlayerInfo(player);
 				}
+				else if(args[0].equalsIgnoreCase("leave"))
+				{
+					PlayerInfo.erasePlayerInfo(player);
+				}
 				else if(args[0].equalsIgnoreCase("challenges"))
 				{	
 					sender.addChatMessage(new ChatComponentText(""));

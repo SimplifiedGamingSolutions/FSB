@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.sgs.skyblocks.island.Island;
+import com.sgs.skyblocks.island.IslandGenerator;
 import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
 public class PlayerInfo implements Serializable{
@@ -44,8 +45,13 @@ public class PlayerInfo implements Serializable{
 	}
 
 	public void savePlayerInfo(EntityPlayer player){
-		NBTTagCompound data = SkyBlocksWorldData.forWorld(player.getEntityWorld()).getData();
-		data.setByteArray(player.getName(), this.toBytes());
+		SkyBlocksWorldData.forWorld(player.getEntityWorld()).getData().setByteArray(player.getName(), this.toBytes());
+	}
+	
+	public static void erasePlayerInfo(EntityPlayerMP player)
+	{
+		IslandGenerator.destroyIsland(player);
+		SkyBlocksWorldData.forWorld(player.getEntityWorld()).getData().removeTag(player.getName());
 	}
 	
 	public Island getIsland()

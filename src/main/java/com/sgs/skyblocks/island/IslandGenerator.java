@@ -5,11 +5,13 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -17,6 +19,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Property;
 
 import com.sgs.skyblocks.SkyBlocks;
+import com.sgs.skyblocks.player.PlayerInfo;
 import com.sgs.skyblocks.utils.SkyBlocksLogger;
 import com.sgs.skyblocks.worldtype.SkyBlocksWorldData;
 
@@ -36,13 +39,12 @@ public class IslandGenerator {
         }
         logger.exiting("constructor", this.getClass().getName());
 	}
-	public static Vec3 createIsland(final EntityPlayer player) {
+	public static BlockPos createIsland(final EntityPlayer player) {
 		IslandGenerator gen = new IslandGenerator();
 		BlockPos pos = getLastIslandPosition(player);
 		SkyBlocksWorldData.setLastIslandBlockPos(player.getEntityWorld(), pos);
 		gen.generateIslandBlocks(pos.getX(), pos.getZ(), player, player.getEntityWorld());
-		Vec3 home = new Vec3(pos.getX()+.5, pos.getY()+5.5, pos.getZ()+2.5);
-        return home;
+        return pos;
     }
 	private static BlockPos getLastIslandPosition(EntityPlayer player)
 	{
@@ -243,5 +245,29 @@ public class IslandGenerator {
 			chest.setInventorySlotContents(i, new ItemStack(Item.getItemById(id), amount));
 			i++;
 		}
+	}
+	public static void destroyIsland(final EntityPlayerMP player) {
+		BlockPos origin = SkyBlocksWorldData.getIslandOrigin(player);
+		if(origin != null)
+		{
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					player.addChatComponentMessage(new ChatComponentText("erasing island"));
+				}
+			}).start();
+			World world = player.getEntityWorld();
+			int range = SkyBlocks.config.getInt("range", "island_location_config", 25, 1, 100, "range to search for onIsland challenges, can be slow over 100.");
+	        for (int x_operate = origin.getX() - range; x_operate <= origin.getX() + range; ++x_operate) {
+	            for (int y_operate = origin.getY() - range; y_operate <= origin.getY() + range; ++y_operate) {
+	                for (int z_operate = origin.getZ() - range; z_operate <= origin.getZ() + range; ++z_operate) {
+	                    world.setBlockState(new BlockPos(x_operate, y_operate, z_operate), Blocks.air.getDefaultState());
+	                }
+	            }
+	        }
+			player.addChatComponentMessage(new ChatComponentText("island erased"));
+		}
+        
 	}
 }
